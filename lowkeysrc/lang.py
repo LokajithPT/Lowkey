@@ -264,7 +264,6 @@ class LowKey:
 
 # Main Functionality
 if __name__ == "__main__":
-    print("Welcome to LowKey, your simple variable processor!")
     lowkey_instance = LowKey()
 
     if len(sys.argv) != 2:

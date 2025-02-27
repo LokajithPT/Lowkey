@@ -34,9 +34,12 @@ class LowKey:
         print("3rd : " + self.words[3])
     # Check for assignment
         if len(self.words) > 3 and self.words[0] == "the" and self.words[2] == "is"   or self.words[3].isdigit():
-
             variable_value = self.words[3]
             errorno = True
+            
+            if len(self.words) < 4:
+                print("missing value in variable assignment ")
+                return 
 
         # Check for boolean assignment
             if variable_value in ["true", "false"]:
@@ -51,7 +54,8 @@ class LowKey:
                 print(f"variable name: {variable_name}\nvariable value: {self.variables[variable_name]} type: integer")
                 print("Integer assignment successful...")
                 errorno = False
-
+            
+            
         # Check for quoted string assignment
             quoted_string = self.extract_quoted_segment(sen)
             if quoted_string:
@@ -178,8 +182,14 @@ class LowKey:
                 pass
             elif word == "int":
                 print("asking for int")
-                x = int(input(""))
-                self.variables[varname] = x
+                try:
+                    x = int(input(""))
+                    self.variables[varname] = x
+
+                except ValueError:
+                    print("invalid input! enter an integer ")
+            
+
             elif word == "bool":
                 x = input("").lower()
 
@@ -351,8 +361,82 @@ class LowKey:
 
         else:
             print("None detected , recheck ur shitty code ...")
+
+
+
     def ifnotcond(self):
-        pass
+        var1 , oper , var2 , von = self.extract("ifnot" , "do")
+
+        print("the var1 is " + var1)
+        print("the var2 is " + var2)
+        print("the operator is " + oper)
+        print("variable or not thing " + str(von))#von has 0 1 2 variables . determine all that with this numbers for comparison u nigga 
+        print("got the if the thing ... ")       
+        
+        ops = {
+                "<":op.lt,
+                ">":op.gt,
+                "==":op.eq,
+                "!=":op.ne,
+                "<=":op.le,
+                ">=":op.ge
+                }
+        expression = " "
+        expression += var1 + oper + var2
+        print("the expression to evaluate is :: " + expression)
+        result = None 
+        print("the result came out to be " + result)
+        if von == 0 :
+            try:
+                number1 = int(var1)
+                number2 = int(var2)
+                result = eval(expression)
+
+                
+                if result:
+                    line = LowKey()
+                    while True:
+                        sentence = input(">>>>")
+        # Create an instance of LowKey with the list of words
+        # Call the method to display the words
+                        try:
+                            line.sentence  = sentence
+                            line.words = sentence.split()
+                            line.tokens()
+
+                            if sentence == "thasall":
+                                print("end of the condition detected ...")
+                                break
+                        except Exception as e :
+                            print("some compiler based error occured ... ")
+                            print(e)
+                            pass
+
+
+                else:
+                    print("the given condition is false ...")
+
+
+            except ValueError:
+                print("the var names that u gave are not declared ...")
+            
+
+
+            #print("no var detected ...")
+            # print("this is good ..")
+            #result = eval(expression) dont worry this is given in the top inside the try method 
+#            print(result)#u need to add the not equal to operator thingy . u forgot that ...
+            
+
+            
+        elif von == 1:
+            print("1 var detected ...")
+            
+        elif von == 2:
+            print("2 var detected ...")
+
+        else:
+            print("None detected , recheck ur shitty code ...")
 
     def tokens(self):
         if self.words:
